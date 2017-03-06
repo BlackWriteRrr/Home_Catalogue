@@ -3,9 +3,6 @@ package GUI.RegistrationGUI;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 
-/**
- * Created by Vladislav on 3/6/2017.
- */
 public class CheckRegistrationData {
     public void checkAll(RegistrationData reg) {
 

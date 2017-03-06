@@ -5,9 +5,6 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 
-/**
- * Created by Vladislav on 3/6/2017.
- */
 public class CatalogueDB {
     public static Connection conn;
     public static Statement statmt;

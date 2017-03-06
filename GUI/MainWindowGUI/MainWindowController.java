@@ -1,10 +1,13 @@
 package GUI.MainWindowGUI;
 
+import GUI.LoginGUI.LoginWindow;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
@@ -32,10 +35,17 @@ public class MainWindowController {
     private TableColumn extensionCol;
     @FXML
     private TableColumn sizeCol;
-    private Stage stage;
-    private Parent root;
-    private ActionEvent actionEvent;
+    private Stage primarystage;
     private ObservableList<CatalogueInformation> data;
+
+    public void start(Stage stage) throws Exception{
+        primarystage = stage;
+        Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+        primarystage.setTitle("Home catalogue");
+        primarystage.setScene(new Scene(root, 600, 400));
+        primarystage.show();
+
+    }
 
     @FXML
     public void AddInformation(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
@@ -60,7 +70,7 @@ public class MainWindowController {
                 fileChooser.getExtensionFilters().add(extFilterImages); break;
         }
 
-        File file = fileChooser.showOpenDialog(stage);//Указываем текущую сцену CodeNote.mainStage
+        File file = fileChooser.showOpenDialog(primarystage);//Указываем текущую сцену CodeNote.mainStage
 
         if (file != null) {
             double size = file.length();
@@ -132,5 +142,10 @@ public class MainWindowController {
         } catch (IOException ex) {
             ex.printStackTrace();
         }
+    }
+
+    public void exit(ActionEvent actionEvent) {
+        LoginWindow log = new LoginWindow();
+        log.entrance(primarystage);
     }
 }

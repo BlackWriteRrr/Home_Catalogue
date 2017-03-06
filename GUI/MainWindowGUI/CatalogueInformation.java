@@ -2,9 +2,6 @@ package GUI.MainWindowGUI;
 
 import javafx.beans.property.SimpleStringProperty;
 
-/**
- * Created by Vladislav on 3/6/2017.
- */
 public class CatalogueInformation {
     private final SimpleStringProperty name;
     private final SimpleStringProperty location;

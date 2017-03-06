@@ -1,5 +1,3 @@
-package GUI;
-
 import GUI.LoginGUI.LoginWindow;
 import javafx.application.Application;
 import javafx.stage.Stage;

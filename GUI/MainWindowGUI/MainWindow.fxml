@@ -11,7 +11,7 @@
         <Button layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#AddInformation" prefHeight="24.0" prefWidth="38.0" text="Add" AnchorPane.topAnchor="11.0" />
         <Button fx:id="buttonDelete" layoutX="58.0" layoutY="11.0" mnemonicParsing="false" onAction="#delete" text="Delete" AnchorPane.topAnchor="11.0" />
         <Button layoutX="383.0" layoutY="11.0" mnemonicParsing="false" onAction="#search" text="Search" AnchorPane.topAnchor="11.0" />
-        <Button layoutX="535.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="Exit" />
+        <Button layoutX="535.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="Exit" onAction="#exit"/>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c21fff" height="354.0" layoutY="47.0" opacity="0.42" stroke="BLACK" strokeType="INSIDE" width="166.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="47.0" />
 
         <TableView fx:id="tv" layoutX="166.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0" >

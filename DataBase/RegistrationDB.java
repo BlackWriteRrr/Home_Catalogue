@@ -2,9 +2,6 @@ package DataBase;
 
 import java.sql.*;
 
-/**
- * Created by Vladislav on 3/6/2017.
- */
 public class RegistrationDB {
 
     public static Connection conn;

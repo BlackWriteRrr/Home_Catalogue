@@ -15,9 +15,6 @@ import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
 
 
-/**
- * Created by Vladislav on 3/6/2017.
- */
 public class RegistrationWindow {
     private RegistrationData reg = new RegistrationData();
     private GridPane grid;

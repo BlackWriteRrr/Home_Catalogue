@@ -3,9 +3,6 @@ package GUI.RegistrationGUI;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
-/**
- * Created by Vladislav on 3/6/2017.
- */
 public class RegistrationData {
     private TextField email;
     private PasswordField firstPassword;

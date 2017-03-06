@@ -1,5 +1,7 @@
 package GUI.LoginGUI;
 
+import GUI.MainWindowGUI.Main;
+import GUI.MainWindowGUI.MainWindowController;
 import GUI.RegistrationGUI.RegistrationData;
 import GUI.RegistrationGUI.RegistrationWindow;
 import javafx.event.ActionEvent;
@@ -18,9 +20,6 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-/**
- * Created by Vladislav on 3/6/2017.
- */
 public class LoginWindow {
     private GridPane grid;
     private Label email;
@@ -39,6 +38,7 @@ public class LoginWindow {
         setPasswordString();
         setSignIn();
         setSignUp(primaryStage);
+        setSignInGuest(primaryStage);
         Scene scene = new Scene(grid, 300, 250);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -79,6 +79,27 @@ public class LoginWindow {
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(signIn);
         grid.add(hbBtn, 1, 4);
+    }
+
+    public void setSignInGuest(Stage primaryStage){
+        signInGuest = new Button("Sign as Guest");
+        HBox hbBtn = new HBox(10);
+        hbBtn.setAlignment(Pos.BOTTOM_LEFT);
+        hbBtn.getChildren().add(signInGuest);
+        grid.add(hbBtn, 0, 4);
+
+        signInGuest.setOnAction(new EventHandler<ActionEvent>() {
+
+            @Override
+            public void handle(ActionEvent e) {
+                MainWindowController main = new MainWindowController();
+                try {
+                    main.start(primaryStage);
+                }catch (Exception e1){
+                    e1.getMessage();
+                }
+            }
+        });
     }
 
     public void setSignUp(Stage primaryStage) {
