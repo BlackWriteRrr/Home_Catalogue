@@ -1,8 +1,6 @@
 package GUI.LoginGUI;
 
-import GUI.MainWindowGUI.Main;
 import GUI.MainWindowGUI.MainWindowController;
-import GUI.RegistrationGUI.RegistrationData;
 import GUI.RegistrationGUI.RegistrationWindow;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -19,6 +17,7 @@ import javafx.scene.text.Font;
 import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import Launch.StartProgram;
 
 public class LoginWindow {
     private GridPane grid;
@@ -37,8 +36,8 @@ public class LoginWindow {
         setEmailString();
         setPasswordString();
         setSignIn();
-        setSignUp(primaryStage);
-        setSignInGuest(primaryStage);
+        setSignUp();
+        setSignInGuest();
         Scene scene = new Scene(grid, 300, 250);
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -79,9 +78,11 @@ public class LoginWindow {
         hbBtn.setAlignment(Pos.BOTTOM_RIGHT);
         hbBtn.getChildren().add(signIn);
         grid.add(hbBtn, 1, 4);
+
+
     }
 
-    public void setSignInGuest(Stage primaryStage){
+    public void setSignInGuest(){
         signInGuest = new Button("Sign as Guest");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
@@ -94,7 +95,7 @@ public class LoginWindow {
             public void handle(ActionEvent e) {
                 MainWindowController main = new MainWindowController();
                 try {
-                    main.start(primaryStage);
+                  main.start();
                 }catch (Exception e1){
                     e1.getMessage();
                 }
@@ -102,7 +103,7 @@ public class LoginWindow {
         });
     }
 
-    public void setSignUp(Stage primaryStage) {
+    public void setSignUp() {
 
         signUp = new Button("Sign up");
         HBox hbBtn2 = new HBox(10);
@@ -117,7 +118,7 @@ public class LoginWindow {
             @Override
             public void handle(ActionEvent e) {
                 RegistrationWindow reg = new RegistrationWindow();
-                reg.registraation(primaryStage);
+                reg.registraation(StartProgram.getStage());
             }
         });
     }

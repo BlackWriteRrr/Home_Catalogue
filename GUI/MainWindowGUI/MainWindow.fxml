@@ -8,10 +8,10 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="GUI.MainWindowGUI.MainWindowController">
     <children>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#9a1fff" height="47.0" layoutX="-1.0" stroke="BLACK" strokeType="INSIDE" width="600.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
-        <Button layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#AddInformation" prefHeight="24.0" prefWidth="38.0" text="Add" AnchorPane.topAnchor="11.0" />
+        <Button fx:id="buttonAdd" layoutX="14.0" layoutY="11.0" mnemonicParsing="false" onAction="#AddInformation" prefHeight="24.0" prefWidth="38.0" text="Add" AnchorPane.topAnchor="11.0" />
         <Button fx:id="buttonDelete" layoutX="58.0" layoutY="11.0" mnemonicParsing="false" onAction="#delete" text="Delete" AnchorPane.topAnchor="11.0" />
         <Button layoutX="383.0" layoutY="11.0" mnemonicParsing="false" onAction="#search" text="Search" AnchorPane.topAnchor="11.0" />
-        <Button layoutX="535.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="Exit" onAction="#exit"/>
+        <Button fx:id="Exit" layoutX="535.0" layoutY="11.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="51.0" text="Exit" onAction="#exit"/>
         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c21fff" height="354.0" layoutY="47.0" opacity="0.42" stroke="BLACK" strokeType="INSIDE" width="166.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="47.0" />
 
         <TableView fx:id="tv" layoutX="166.0" layoutY="47.0" prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="166.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="47.0" >
@@ -23,7 +23,7 @@
             </columns>
         </TableView>
 
-        <ChoiceBox fx:id="choiceBox" layoutX="25.0" layoutY="63.0" onAction="#Update" prefHeight="25.0" prefWidth="118.0" onMouseClicked="#setDoubleMouseClick" >
+        <ChoiceBox fx:id="choiceBox" layoutX="25.0" layoutY="63.0" onAction="#Update" prefHeight="25.0" prefWidth="118.0" onMouseClicked="#setDoubleMouseClick" value="Video" >
             <items>
                 <FXCollections fx:factory="observableArrayList">
                     <String fx:value="Video" />

@@ -13,6 +13,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+import Launch.StartProgram;
+
+import java.sql.SQLException;
 
 
 public class RegistrationWindow {
@@ -28,7 +31,7 @@ public class RegistrationWindow {
         setGrid();
         setEmail();
         setPassword();
-        setButtonBack(primaryStage);
+        setButtonBack();
         setButtonRegB();
         scene = new Scene(grid, 300, 300);
         primaryStage.setScene(scene);
@@ -68,7 +71,7 @@ public class RegistrationWindow {
         grid.add(reg.getSecondPassword(), 0, 3);
     }
 
-    public void setButtonBack(Stage primaryStage) {
+    public void setButtonBack() {
         back = new Button("Back");
         HBox hbBtn = new HBox(10);
         hbBtn.setAlignment(Pos.BOTTOM_LEFT);
@@ -80,7 +83,7 @@ public class RegistrationWindow {
             @Override
             public void handle(ActionEvent e) {
                 LoginWindow log = new LoginWindow();
-                log.entrance(primaryStage);
+                log.entrance(StartProgram.getStage());
             }
         });
     }
@@ -97,7 +100,13 @@ public class RegistrationWindow {
             @Override
             public void handle(ActionEvent e) {
                 CheckRegistrationData check = new CheckRegistrationData();
-                check.checkAll(reg);
+                try {
+                    check.checkAll(reg, StartProgram.getStage());
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
             }
         });
     }

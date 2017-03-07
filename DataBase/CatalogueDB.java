@@ -10,7 +10,6 @@ public class CatalogueDB {
     public static Statement statmt;
     public static ResultSet resSet;
 
-
     public static void createDB() throws ClassNotFoundException, SQLException {
         conn = null;
         Class.forName("org.sqlite.JDBC");
@@ -23,7 +22,8 @@ public class CatalogueDB {
         createDB();
         statmt.execute("INSERT INTO 'catalog' ('Name', 'Location', 'Extension','Size','Type') VALUES ('"+
                 inf.getName()+"', '"+inf.getLocation()+"', '"+inf.getExtension()+"', '"+inf.getSize()+"', '"+type+"'); ");
-        closeDB();
+        conn.close();
+        statmt.close();
     }
 
     public static ObservableList<CatalogueInformation> readDB(ObservableList<CatalogueInformation> data, String Type, boolean flag)
@@ -33,7 +33,6 @@ public class CatalogueDB {
         data = FXCollections.observableArrayList();
 
         while (resSet.next()) {
-
             String name = resSet.getString("Name");
             String location = resSet.getString("Location");
             String extension = resSet.getString("Extension");

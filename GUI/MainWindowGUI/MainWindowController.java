@@ -9,6 +9,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.FileChooser;
@@ -18,13 +20,14 @@ import java.io.IOException;
 import java.sql.SQLException;
 import DataBase.CatalogueDB;
 import javafx.stage.Stage;
+import Launch.StartProgram;
 
 
 public class MainWindowController {
     @FXML
     private TableView tv;
     @FXML
-    private javafx.scene.control.TextField search;
+    private TextField search;
     @FXML
     private ChoiceBox choiceBox;
     @FXML
@@ -32,25 +35,57 @@ public class MainWindowController {
     @FXML
     private TableColumn locationCol;
     @FXML
+    private Button buttonDelete;
+    @FXML
     private TableColumn extensionCol;
     @FXML
     private TableColumn sizeCol;
-    private Stage primarystage;
+    @FXML
+    private Scene scene;
+    @FXML
+    private Button buttonAdd;
+    private Stage stage;
+    private String status;
+    private ActionEvent actionEvent;
+
     private ObservableList<CatalogueInformation> data;
 
-    public void start(Stage stage) throws Exception{
-        primarystage = stage;
-        Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
-        primarystage.setTitle("Home catalogue");
-        primarystage.setScene(new Scene(root, 600, 400));
-        primarystage.show();
 
+
+    public void start() throws IOException {
+        Parent root = FXMLLoader.load(getClass().getResource("MainWindow.fxml"));
+        StartProgram.getStage().setTitle("Home catalogue");
+        scene = new Scene(root, 600, 400);
+        StartProgram.getStage().setScene(scene);
+    }
+
+    @FXML
+    private void initialize(){
+    /**    if(status.equals("Guest")) {
+            buttonDelete.setVisible(false);
+            buttonAdd.setVisible(false);
+        }
+
+        if(status.equals("User")){
+            buttonDelete.setVisible(false);
+        }
+     */
+
+
+
+        try {
+            Update(actionEvent);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
     }
 
     @FXML
     public void AddInformation(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
-        FileChooser fileChooser = new FileChooser();//Класс работы с диалогом выборки и сохранения
-        fileChooser.setTitle("Open Document");//Заголовок диалога
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Open Document");
         switch("" + choiceBox.getValue())
         {
             case "Video" :  FileChooser.ExtensionFilter extFilterVideo =
@@ -70,7 +105,7 @@ public class MainWindowController {
                 fileChooser.getExtensionFilters().add(extFilterImages); break;
         }
 
-        File file = fileChooser.showOpenDialog(primarystage);//Указываем текущую сцену CodeNote.mainStage
+        File file = fileChooser.showOpenDialog(StartProgram.getStage());
 
         if (file != null) {
             double size = file.length();
@@ -79,7 +114,6 @@ public class MainWindowController {
         }
         Update(actionEvent);
     }
-
 
     public void Update(ActionEvent actionEvent) throws SQLException, ClassNotFoundException{
         data = CatalogueDB.readDB(data,"" + choiceBox.getValue(), true);
@@ -143,9 +177,12 @@ public class MainWindowController {
             ex.printStackTrace();
         }
     }
-
+    @FXML
     public void exit(ActionEvent actionEvent) {
-        LoginWindow log = new LoginWindow();
-        log.entrance(primarystage);
+
+                LoginWindow log = new LoginWindow();
+                log.entrance(StartProgram.getStage());
+
+
     }
 }
