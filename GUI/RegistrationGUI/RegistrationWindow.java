@@ -33,7 +33,8 @@ public class RegistrationWindow {
         setPassword();
         setButtonBack();
         setButtonRegB();
-        scene = new Scene(grid, 300, 300);
+        scene = new Scene(grid, 400, 350);
+        scene.getStylesheets().add(LoginWindow.class.getResource("Style.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
 

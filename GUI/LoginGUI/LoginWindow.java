@@ -43,7 +43,8 @@ public class LoginWindow {
         setSignIn();
         setSignUp();
         setSignInGuest();
-        Scene scene = new Scene(grid, 300, 250);
+        Scene scene = new Scene(grid, 400, 350);
+        scene.getStylesheets().add(LoginWindow.class.getResource("Style.css").toExternalForm());
         primaryStage.setScene(scene);
         primaryStage.show();
     }
