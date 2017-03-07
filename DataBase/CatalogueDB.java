@@ -48,6 +48,20 @@ public class CatalogueDB {
         return data;
     }
 
+    public static boolean checkFile(String path) throws ClassNotFoundException, SQLException {
+        createDB();
+        resSet = statmt.executeQuery("SELECT * FROM catalog");
+        while (resSet.next()) {
+            String location = resSet.getString("Location");
+            if(location.equals(path)) {
+                closeDB();
+                return false;
+            }
+        }
+        closeDB();
+        return true;
+    }
+
     public static void deleteDB(String loc) throws ClassNotFoundException, SQLException {
         createDB();
         statmt.execute("DELETE FROM catalog WHERE Location=='"+loc+"'");

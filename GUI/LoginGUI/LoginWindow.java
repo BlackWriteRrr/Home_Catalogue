@@ -2,6 +2,7 @@ package GUI.LoginGUI;
 
 import GUI.MainWindowGUI.MainWindowController;
 import GUI.RegistrationGUI.RegistrationWindow;
+import Launch.User;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -18,6 +19,10 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import Launch.StartProgram;
+
+import java.sql.SQLException;
+
+import static DataBase.RegistrationDB.checkSingIn;
 
 public class LoginWindow {
     private GridPane grid;
@@ -79,7 +84,30 @@ public class LoginWindow {
         hbBtn.getChildren().add(signIn);
         grid.add(hbBtn, 1, 4);
 
+        signIn.setOnAction(new EventHandler<ActionEvent>() {
 
+            @Override
+            public void handle(ActionEvent e) {
+                try {
+                    String password = getEncryptPassword(userTextField.getText(),pwBox.getText());
+                    StartProgram.user = checkSingIn(userTextField.getText(), password);
+
+                } catch (SQLException e1) {
+                    e1.printStackTrace();
+                } catch (ClassNotFoundException e1) {
+                    e1.printStackTrace();
+                }
+
+                if(StartProgram.user!=null) {
+                    try {
+                        MainWindowController main = new MainWindowController();
+                        main.start();
+                    } catch (Exception e1) {
+                        e1.getMessage();
+                    }
+                }
+            }
+        });
     }
 
     public void setSignInGuest(){
@@ -94,6 +122,7 @@ public class LoginWindow {
             @Override
             public void handle(ActionEvent e) {
                 MainWindowController main = new MainWindowController();
+                StartProgram.user = new User("","Guest","",0);
                 try {
                   main.start();
                 }catch (Exception e1){
@@ -121,5 +150,17 @@ public class LoginWindow {
                 reg.registraation(StartProgram.getStage());
             }
         });
+    }
+
+    public String getEncryptPassword(String login, String pass){
+        byte[] key = login.getBytes();
+        byte[] arr = pass.getBytes();
+        byte[] result = new byte[arr.length];
+        for(int i = 0; i< arr.length; i++)
+        {
+            result[i] = (byte) (arr[i] ^ key[i % key.length]);
+        }
+        String encryptPassword = new String(result);
+        return  encryptPassword;
     }
 }

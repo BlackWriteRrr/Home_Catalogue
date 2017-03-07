@@ -7,11 +7,15 @@ public class User {
     private String login;
     private String status;
     private String upDateInf;
+    private double size;
 
-    public User(String log, String stat, String upD){
+    public User(){}
+
+    public User(String log, String stat, String upD, double siz){
         login=log;
         status=stat;
         upDateInf=upD;
+        size=siz;
     }
 
     public String getLogin(){
@@ -24,5 +28,17 @@ public class User {
 
     public String getUpDateInf(){
         return upDateInf;
+    }
+
+    public double getSize(){
+        return size;
+    }
+
+    public void setSize(double Size){
+        size=Size;
+    }
+
+    public void setUpDateInf(String date){
+        upDateInf=date;
     }
 }

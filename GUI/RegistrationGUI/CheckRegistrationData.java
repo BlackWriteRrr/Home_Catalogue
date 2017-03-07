@@ -7,6 +7,7 @@ import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 
 import static DataBase.RegistrationDB.checkLogin;
 import static DataBase.RegistrationDB.writeDB;
@@ -15,7 +16,10 @@ public class CheckRegistrationData {
     public void checkAll(RegistrationData reg, Stage primaryStage) throws SQLException, ClassNotFoundException {
 
         if (checkEmail(reg.getEmail()) && checkPassword(reg)) {
-            writeDB(reg);
+            java.util.Date dateNow = new java.util.Date();
+            SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+            String currentData = formatForDateNow.format(dateNow);
+            writeDB(reg,currentData);
             LoginWindow log = new LoginWindow();
             log.entrance(primaryStage);
         } else {

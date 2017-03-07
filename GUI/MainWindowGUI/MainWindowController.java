@@ -18,9 +18,13 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+
 import DataBase.CatalogueDB;
 import javafx.stage.Stage;
 import Launch.StartProgram;
+
+import static DataBase.RegistrationDB.overwriting;
 
 
 public class MainWindowController {
@@ -61,17 +65,14 @@ public class MainWindowController {
 
     @FXML
     private void initialize(){
-    /**    if(status.equals("Guest")) {
+        if((StartProgram.user.getStatus()).equals("Guest")) {
             buttonDelete.setVisible(false);
             buttonAdd.setVisible(false);
         }
 
-        if(status.equals("User")){
+        if(StartProgram.user.getStatus().equals("User")){
             buttonDelete.setVisible(false);
         }
-     */
-
-
 
         try {
             Update(actionEvent);
@@ -86,34 +87,67 @@ public class MainWindowController {
     public void AddInformation(ActionEvent actionEvent) throws ClassNotFoundException, SQLException {
         FileChooser fileChooser = new FileChooser();
         fileChooser.setTitle("Open Document");
-        switch("" + choiceBox.getValue())
-        {
-            case "Video" :  FileChooser.ExtensionFilter extFilterVideo =
-                    new FileChooser.ExtensionFilter("Video files (*.avi)", "*.avi");
-                fileChooser.getExtensionFilters().add(extFilterVideo); break;
+        switch ("" + choiceBox.getValue()) {
+            case "Video":
+                FileChooser.ExtensionFilter extFilterVideo =
+                        new FileChooser.ExtensionFilter("Video files (*.avi)", "*.avi");
+                fileChooser.getExtensionFilters().add(extFilterVideo);
+                break;
 
-            case "Audio" :  FileChooser.ExtensionFilter extFilterAudio =
-                    new FileChooser.ExtensionFilter("MP3 files (*.mp3)", "*.mp3");
-                fileChooser.getExtensionFilters().add(extFilterAudio); break;
+            case "Audio":
+                FileChooser.ExtensionFilter extFilterAudio =
+                        new FileChooser.ExtensionFilter("MP3 files (*.mp3)", "*.mp3");
+                fileChooser.getExtensionFilters().add(extFilterAudio);
+                break;
 
-            case "Documents" :  FileChooser.ExtensionFilter extFilterDoc =
-                    new FileChooser.ExtensionFilter("Doc files (*.docx)", "*.docx");
-                fileChooser.getExtensionFilters().add(extFilterDoc); break;
+            case "Documents":
+                FileChooser.ExtensionFilter extFilterDoc =
+                        new FileChooser.ExtensionFilter("Doc files (*.docx)", "*.docx");
+                fileChooser.getExtensionFilters().add(extFilterDoc);
+                break;
 
-            case "Images" :   FileChooser.ExtensionFilter extFilterImages =
-                    new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg");
-                fileChooser.getExtensionFilters().add(extFilterImages); break;
+            case "Images":
+                FileChooser.ExtensionFilter extFilterImages =
+                        new FileChooser.ExtensionFilter("JPG files (*.jpg)", "*.jpg");
+                fileChooser.getExtensionFilters().add(extFilterImages);
+                break;
         }
 
         File file = fileChooser.showOpenDialog(StartProgram.getStage());
 
-        if (file != null) {
+
+
+        if (file != null && CatalogueDB.checkFile(file.getPath())) {
             double size = file.length();
-            CatalogueInformation inf = new  CatalogueInformation(file.getName(), file.getPath(), getFileExtension(file) ,"" + size/1000 );
-            CatalogueDB.writeDB(inf ,"" + choiceBox.getValue());
+            if (StartProgram.user.getStatus().equals("User")) {
+                java.util.Date dateNow = new java.util.Date();
+                SimpleDateFormat formatForDateNow = new SimpleDateFormat("dd.MM.yyyy");
+                String currentData = formatForDateNow.format(dateNow);
+                if(!StartProgram.user.getUpDateInf().equals(currentData)){
+                    StartProgram.user.setSize(10);
+                    StartProgram.user.setUpDateInf(currentData);
+                    overwriting(StartProgram.user);
+                }
+
+                if (StartProgram.user.getSize() >= size/1000) {
+
+                    CatalogueInformation inf = new CatalogueInformation(file.getName(), file.getPath(), getFileExtension(file), "" + size / 1000);
+                    CatalogueDB.writeDB(inf, "" + choiceBox.getValue());
+                    StartProgram.user.setSize(StartProgram.user.getSize()-size/1000);
+                    StartProgram.user.setUpDateInf(currentData);
+                    overwriting(StartProgram.user);
+                }
+            }
+            else{
+                CatalogueInformation inf = new CatalogueInformation(file.getName(), file.getPath(), getFileExtension(file), "" + size / 1000);
+                CatalogueDB.writeDB(inf, "" + choiceBox.getValue());
+            }
+
+            Update(actionEvent);
         }
-        Update(actionEvent);
     }
+
+
 
     public void Update(ActionEvent actionEvent) throws SQLException, ClassNotFoundException{
         data = CatalogueDB.readDB(data,"" + choiceBox.getValue(), true);
@@ -142,6 +176,7 @@ public class MainWindowController {
         tv.setItems(data);
     }
 
+
     private static String getFileExtension(File file) {
         String fileName = file.getName();
         // если в имени файла есть точка и она не является первым символом в названии файла
@@ -151,6 +186,7 @@ public class MainWindowController {
             // в противном случае возвращаем заглушку, то есть расширение не найдено
         else return "";
     }
+
 
     public void setDoubleMouseClick(MouseEvent mouseEvent) {
         tv.setOnMouseClicked(new EventHandler<MouseEvent>() {
@@ -165,6 +201,7 @@ public class MainWindowController {
             }
         });
     }
+
 
     private  static void openFile(String path) {
         try {

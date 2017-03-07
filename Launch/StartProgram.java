@@ -6,6 +6,8 @@ import javafx.stage.Stage;
 
 public class StartProgram extends Application {
 private static Stage primaryStage;
+public static User user;
+
     @Override
     public void start(Stage Stage) {
         primaryStage = Stage;
